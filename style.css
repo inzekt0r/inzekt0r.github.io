@@ -1,106 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap');
+
 * {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    background-color: #0a0b10;
-    color: #00ff66; /* Klassisches Terminal-Grün */
-    font-family: 'Courier New', Courier, monospace;
+    background-color: #05080c;
+    color: #00ff66;
+    font-family: 'Fira Code', monospace;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     padding: 20px;
-}
-
-.terminal-container {
-    width: 100%;
-    max-width: 800px;
-    background-color: #12131a;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    border: 1px solid #222;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 500px;
-}
-
-.terminal-header {
-    background-color: #1a1c23;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #222;
     position: relative;
 }
 
-.btn {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 8px;
-}
-
-.red { background-color: #ff5f56; }
-.yellow { background-color: #ffbd2e; }
-.green { background-color: #27c93f; }
-
-.title {
-    color: #888;
-    font-size: 14px;
+/* Subtiler Scanline-Effekt für Retro-Vibe */
+.scanlines {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+                                rgba(0, 0, 0, 0.25) 50%
+    ), linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.06),
+                       rgba(0, 255, 0, 0.02),
+                       rgba(0, 0, 255, 0.06)
+    );
+    background-size: 100% 4px, 6px 100%;
+    z-index: 10;
+    pointer-events: none;
 }
 
-.terminal-body {
+.hud-container {
+    width: 100%;
+    max-width: 950px;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #1f3d24;
+    background-color: rgba(5, 12, 8, 0.95);
+    box-shadow: 0 0 20px rgba(0, 255, 102, 0.15);
+    z-index: 2;
+}
+
+/* Header */
+.hud-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid #1f3d24;
+    background-color: #08120a;
+    font-size: 12px;
+}
+
+.status-item {
+    display: flex;
+    gap: 5px;
+}
+
+.label {
+    color: #888;
+}
+
+.value.online {
+    color: #00ff66;
+    text-shadow: 0 0 5px rgba(0, 255, 102, 0.5);
+}
+
+.value.cyan {
+    color: #00d2ff;
+}
+
+/* Split-Screen Hauptbereich */
+.hud-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Navigations-Sidebar */
+.hud-nav {
+    width: 250px;
+    border-right: 1px solid #1f3d24;
+    background-color: #060e08;
     padding: 20px;
-    flex-grow: 1;
-    overflow-y: auto;
-    font-size: 15px;
-    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* Scrollbar-Styling */
-.terminal-body::-webkit-scrollbar {
-    width: 8px;
-}
-.terminal-body::-webkit-scrollbar-thumb {
-    background: #2a2d3d;
-    border-radius: 4px;
+.nav-title {
+    font-size: 11px;
+    color: #00d2ff;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
 }
 
-.output {
-    margin-bottom: 8px;
-    white-space: pre-wrap;
-    word-break: break-all;
-}
-
-.highlight {
-    color: #00d2ff; /* Blau für hervorgehobene Befehle */
-}
-
-.prompt {
-    color: #ff007f; /* Pink für den Prompt */
-    margin-right: 10px;
-}
-
-.input-line {
+.nav-btn {
+    background: transparent;
+    border: 1px solid #1f3d24;
+    color: #00ff66;
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    text-align: left;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-#command-input {
-background: transparent;
-border: none;
-color: #00ff66;
-font-family: 'Courier New', Courier, monospace;
-font-size: 15px;
-outline: none;
-flex-grow: 1;
-caret-color: #00ff66; /* Cursor-Farbe */
+.nav-btn:hover {
+    background-color: rgba(0, 255, 102, 0.1);
+    border-color: #00ff66;
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+}
+
+.nav-btn.active {
+    background-color: rgba(0, 255, 102, 0.15);
+    border-color: #00ff66;
+    color: #fff;
+    text-shadow: 0 0 5px #00ff66;
+}
+
+.nav-btn .icon {
+    color: #00d2ff;
+}
+
+/* Terminal Monitor */
+.hud-monitor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #030604;
+}
+
+.monitor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #08120a;
+    padding: 8px 20px;
+    border-bottom: 1px solid #1f3d24;
+    font-size: 12px;
+    color: #888;
+}
+
+.window-controls {
+    display: flex;
+    gap: 6px;
+}
+
+.window-controls .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #1f3d24;
+}
+
+.monitor-content {
+    padding: 25px;
+    flex: 1;
+    overflow-y: auto;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #a4ffc2;
+}
+
+.monitor-content h2 {
+    color: #00ff66;
+    margin-bottom: 15px;
+    font-size: 20px;
+    text-transform: uppercase;
+    border-bottom: 1px dashed #1f3d24;
+    padding-bottom: 8px;
+}
+
+.monitor-content p {
+    margin-bottom: 15px;
+}
+
+.monitor-content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.monitor-content li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.monitor-content li::before {
+    content: "➔";
+    color: #00d2ff;
+}
+
+/* Projekt-Listen-Styling */
+.project-item {
+    margin-bottom: 20px;
+}
+.project-title {
+    color: #00d2ff;
+    font-weight: bold;
+}
+.project-desc {
+    font-size: 14px;
+    color: #88cfa0;
+    margin-left: 15px;
+}
+
+/* Footer */
+.hud-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-top: 1px solid #1f3d24;
+    background-color: #08120a;
+    font-size: 11px;
+    color: #666;
+}
+
+.blink {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* Mobil-Optimierung */
+@media (max-width: 768px) {
+    body {
+        overflow: auto;
+        height: auto;
+        padding: 10px;
+    }
+    .hud-container {
+        height: auto;
+    }
+    .hud-main {
+        flex-direction: column;
+    }
+    .hud-nav {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #1f3d24;
+    }
+    .hud-monitor {
+        min-height: 400px;
+    }
 }
