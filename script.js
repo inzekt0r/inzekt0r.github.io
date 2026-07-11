@@ -17,7 +17,7 @@ const contentData = {
     `,
     about: `
     <h2>Benutzerprofil // ABOUT_ME</h2>
-    <p><strong>Name:</strong> [Dein Name]</p>
+    <p><strong>Name:</strong> [inzekt0r]</p>
     <p><strong>Rolle:</strong> Web-Entwickler & Designer</p>
     <p><strong>Fokus:</strong> Entwicklung moderner, interaktiver Webanwendungen.</p>
     <br>
@@ -56,10 +56,7 @@ const contentData = {
     <h2>Kommunikation // CONTACT</h2>
     <p>Sende eine direkte Übertragung an meine Endpunkte:</p>
     <ul>
-    <li><strong>E-Mail:</strong> <a href="mailto:deine-email@beispiel.de" style="color: #00d2ff; text-decoration: none; border-bottom: 1px dotted #00d2ff;">deine-email@beispiel.de</a></li>
-    <li><strong>GitHub:</strong> <a href="https://github.com/dein-username" target="_blank" style="color: #00d2ff; text-decoration: none; border-bottom: 1px dotted #00d2ff;">github.com/dein-username</a></li>
-    <li><strong>LinkedIn:</strong> <a href="#" target="_blank" style="color: #00d2ff; text-decoration: none; border-bottom: 1px dotted #00d2ff;">linkedin.com/in/dein-profil</a></li>
-    </ul>
+    <li><strong>GitHub:</strong> <a href="https://github.com/inzekt0r" target="_blank" style="color: #00d2ff; text-decoration: none; border-bottom: 1px dotted #00d2ff;">github.com/dein-username</a></li>
     <br>
     <p>Antwortzeit in der Regel innerhalb von 24 Systemzyklen (Stunden).</p>
     `
