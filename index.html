@@ -3,31 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal Portfolio</title>
+    <title>Hacker OS - Interactive Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="terminal-container">
-        <!-- Terminal Header im Stil von macOS/Linux -->
-        <div class="terminal-header">
-            <span class="btn red"></span>
-            <span class="btn yellow"></span>
-            <span class="btn green"></span>
-            <div class="title">gast@github-pages:~</div>
-        </div>
-        <!-- Terminal Inhalt -->
-        <div class="terminal-body" id="terminal-body">
-            <div class="output">Willkommen auf meiner Terminal-Webseite!</div>
-            <div class="output">Tippe <span class="highlight">help</span> ein und drücke Enter, um eine Liste der verfügbaren Befehle anzuzeigen.</div>
-            <br>
-            <div id="history"></div>
-            <!-- Eingabezeile -->
-            <div class="input-line">
-                <span class="prompt">gast@terminal:~$</span>
-                <input type="text" id="command-input" autofocus autocomplete="off" spellcheck="false">
-            </div>
-        </div>
+    <!-- Retro-Röhrenmonitor-Effekt (Scanlines) -->
+    <div class="scanlines"></div>
+
+    <div class="hud-container">
+        <!-- Header Statusleiste -->
+        <header class="hud-header">
+            <div class="status-item"><span class="label">SYSTEM:</span> <span class="value online">ONLINE</span></div>
+            <div class="status-item"><span class="label">SECURE_CONN:</span> <span class="value cyan">ACTIVE</span></div>
+            <div class="status-item"><span class="label">USER:</span> <span class="value">GUEST_PROT</span></div>
+        </header>
+
+        <!-- Hauptbereich (Split-Screen) -->
+        <main class="hud-main">
+            <!-- Navigationsmenü (als Dateisystem getarnt) -->
+            <nav class="hud-nav">
+                <div class="nav-title">FILE_SYSTEM //</div>
+                <button class="nav-btn active" data-target="welcome">
+                    <span class="icon">></span> README.txt
+                </button>
+                <button class="nav-btn" data-target="about">
+                    <span class="icon">></span> ABOUT_ME.usr
+                </button>
+                <button class="nav-btn" data-target="projects">
+                    <span class="icon">></span> PROJECTS.log
+                </button>
+                <button class="nav-btn" data-target="skills">
+                    <span class="icon">></span> SKILLS.sys
+                </button>
+                <button class="nav-btn" data-target="contact">
+                    <span class="icon">></span> CONTACT.cfg
+                </button>
+            </nav>
+
+            <!-- Terminal Ausgabe-Bildschirm -->
+            <section class="hud-monitor">
+                <div class="monitor-header">
+                    <span class="terminal-title">TERMINAL://MONITOR_01</span>
+                    <div class="window-controls">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+                <div class="monitor-content" id="output-screen">
+                    <!-- Inhalt wird durch JS geladen -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="hud-footer">
+            <div>SYS_PORT: 8080</div>
+            <div class="blink">■ CURSOR_ACTIVE</div>
+        </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
